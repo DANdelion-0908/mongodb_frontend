@@ -3,7 +3,7 @@ import React from 'react'
 const Restaurant_card = ({ restaurant_img, restaurant_name, restaurant_rating }) => {
   return (
     <>
-        <div className="card max-w-100 min-h-80 max-h-80 m-5 bg-base-100 shadow-sm cursor-pointer hover:scale-103 transition-all" onClick={() => {alert(`${restaurant_name}`)}}>
+        <div className="card max-w-100 min-h-80 max-h-80 mt-50 m-5 bg-base-100 shadow-sm cursor-pointer hover:scale-103 transition-all" onClick={() => {alert(`${restaurant_name}`)}}>
             <figure>
                 <img
                 src={restaurant_img}

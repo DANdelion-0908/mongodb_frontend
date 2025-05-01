@@ -22,9 +22,9 @@ export async function fetchPostsByUser() {
     }
 }
 
-export async function fetchUser() {
+export async function fetchUser(username) {
     try {
-        const response = await fetch(`https://backend-wtp.vercel.app/api/get-user/${userName}`);    
+        const response = await fetch(`https://backend-mongo-lyart.vercel.app/api/user/${username}`);    
     
         const user = await response.json();
     
@@ -41,10 +41,10 @@ export async function fetchUser() {
     }
 }
 
-export async function registerUser() {
+export async function registerUser(body) {
     console.log(body);
     try {
-        const response = await fetch(`https://backend-wtp.vercel.app/api/registerUser`, {
+        const response = await fetch(`https://backend-mongo-lyart.vercel.app/api/user`, {
             headers: {
                 "Content-Type": "application/json",
               },

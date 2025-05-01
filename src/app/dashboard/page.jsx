@@ -6,20 +6,25 @@ import get_restaurants, { get_dishes } from '@/controller/restaurant_controller'
 import { useState, useEffect } from 'react'
 import Promo_card from '@/components/promo_card'
 import Header from '@/components/header'
+import { useRouter } from 'next/navigation';
 
-const Dashboard = () => {
+export default function Dashboard ({ handleAuth }) {
     const [restaurants, setRestaurants] = useState([]);
     const [dishes, setDishes] = useState([]);
     const [user, setUser] = useState({});
+    const router = useRouter();
 
     useEffect(() => {
         get_restaurants().then(restaurant_list => setRestaurants(restaurant_list));
         get_dishes("Pizza Hut").then(dish_list => setDishes(dish_list));
+        setUser(JSON.parse(localStorage.getItem('user')))
     }, [])
 
-    useEffect(() => {
-        console.log("AAAAAAAAA: ", dishes);
-    }, [dishes]);
+    const handleLogout = () => {
+        localStorage.removeItem('user');
+        router.push('/login');
+        alert("Sesión cerrada");
+    }
 
   return (
     <>
@@ -57,24 +62,23 @@ const Dashboard = () => {
             </div>
             <div className="drawer-side shadow-sm">
                 <label htmlFor="my-drawer-2" aria-label="close sidebar" className="drawer-overlay"></label>
-                <ul className="menu bg-base-100 min-h-full w-70 pt-20 pb-20 flex flex-col items-center justify-between">
+                <ul className="menu bg-base-100 min-h-full w-70 pt-10 pb-10 flex flex-col items-center justify-between">
                     {/* Sidebar content here */}
-                    <div className="avatar cursor-pointer" onClick={() => {alert("Perfil")}}>
+                    <div className="flex flex-col gap-7 justify-center items-center avatar cursor-pointer" onClick={() => {alert("Perfil")}}>
                         <div className="ring-primary ring-offset-base-100 w-24 rounded-full ring-2 ring-offset-2">
-                            <img src={user.user_image || "https://www.iconpacks.net/icons/2/free-user-icon-3296-thumb.png"} />
+                            <img src={user.image || "https://www.iconpacks.net/icons/2/free-user-icon-3296-thumb.png"} />
                         </div>
+                        <span className='badge badge-ghost w-auto text-xl'>{user.user_name}</span>
                     </div>
                     <ul className='flex flex-col gap-5'>
                         <li><div className='btn btn-neutral'>Lorem Ipsum</div></li>
                         <li><div className='btn btn-neutral'>El diablo, bro</div></li>
                         <li><div className='btn btn-neutral'>No sé qué poner</div></li>
                     </ul>
-                    <li><div className='btn btn-primary'>Cerrar sesión</div></li>
+                    <li><div onClick={handleLogout} className='btn btn-primary'>Cerrar sesión</div></li>
                 </ul>
             </div>
         </div>
     </>
   )
 }
-
-export default Dashboard

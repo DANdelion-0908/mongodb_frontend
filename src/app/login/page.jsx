@@ -23,19 +23,15 @@ export default function Login() {
 
     const handleLogin = async () => {
         try {
-            const response = await fetchUser(userName);
+            const response = await fetchUser(userName);            
     
-            if (response.message === "User found") {
-                const user = response.user;
-                const userCountry = response.country;
-    
-                if (user && user.password === password) {
+            if (response) {                
+                if (response.user_name && response.password === password) {
                     // Convertir el objeto user a JSON y almacenarlo en localStorage
-                    localStorage.setItem("user", JSON.stringify(user));
-                    localStorage.setItem("userName", user.user_name);
-                    localStorage.setItem("userCountry", JSON.stringify(userCountry)); // Si country es un objeto
+                    localStorage.setItem("user", JSON.stringify(response));
                     setUserAuth(true);
                     setError("");
+
                 } else {
                     setError("Contraseña incorrecta");
                 }
@@ -69,7 +65,7 @@ export default function Login() {
                                 <img src="favicon.ico" className='self-center' alt="Logo de WTP" width={"100vh"} />
                                 <h1 className="text-5xl font-bold">Ingresa tus credenciales</h1>
                             </div>
-                            <form className="card-body" action={(e) => { handleLogin(); }}>
+                            <form className="card-body" onSubmit={(e) => { e.preventDefault(); handleLogin(); }}>
                                 <div className="form-control">
                                     <label className="label">
                                         <span className="label-text text-primary">Nombre de usuario</span>
@@ -99,7 +95,7 @@ export default function Login() {
                     </div>
                 </div>
             ) : (
-                <Dashboard handleAuth={handleAuth} />
+                router.push("/dashboard")
             )}
         </>
     )

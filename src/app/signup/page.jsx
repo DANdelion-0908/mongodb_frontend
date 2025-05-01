@@ -5,14 +5,9 @@ import { useRouter } from 'next/navigation';
 import { registerUser } from '../functions/user';
 
 export default function Signup() {
-    const [email, setEmail] = useState("");
-    const [username, setusername] = useState("");
-    const [born, setBorn] = useState("");
-    const [first_name, setfirst_name] = useState("");
-    const [last_name, setlast_name] = useState("");
+    const [user_name, setusername] = useState("");
     const [password, setPassword] = useState("");
     const [verifyPassword, setVerifyPassword] = useState("");
-    const [gender, setgender] = useState("M");
     const router = useRouter();
 
     const handleAuth = () => {
@@ -21,7 +16,7 @@ export default function Signup() {
     
     const handleSignup = async () => {
         if (password === verifyPassword) {
-            const body = JSON.stringify({ username, password, email, born, first_name, last_name, gender })
+            const body = JSON.stringify({ user_name, password, "admin": 0 })
             const response = await registerUser(body);
             console.log(response?.status);
 
@@ -47,78 +42,27 @@ export default function Signup() {
                             <img src="favicon.png" className='self-center' alt="Logo de WTP" width={"100vh"}/>
                             <h1 className="text-3xl font-bold">Regístrate con tus datos</h1>
                         </div>
-                        <form className="card-body" action={() => handleSignup()}>
-                        <div className="form-control">
-                            <label className="label">
-                                <span className="label-text text-primary">Nombre</span>
-                            </label>
-                            <input type="text" value={first_name} onChange={(e) => setfirst_name(e.target.value)} placeholder="nombre de usuario" className="input input-bordered" required />   
-                            <label className="label">
-                                <span className="label-text text-primary">Apellido</span>
-                            </label>
-                            <input type="text" value={last_name} onChange={(e) => setlast_name(e.target.value)} placeholder="nombre de usuario" className="input input-bordered" required />
-                        </div>
+                        <form className="card-body w-full" action={() => handleSignup()}>
                             <div className="form-control">
                             <label className="label">
-                                <span className="label-text text-primary">Nombre de usuario</span>
+                                <span className="badge badge-ghost">Nombre de usuario</span>
                             </label>
-                            <input type="text" value={username} onChange={(e) => setusername(e.target.value)} placeholder="nombre de usuario" className="input input-bordered" required />
+                            <input type="text" value={user_name} onChange={(e) => setusername(e.target.value)} placeholder="nombre de usuario" className="input input-bordered w-full mb-5" required />
                             </div>
                             <div className="form-control">
                             <label className="label">
-                                <span className="label-text text-primary">Correo electrónico</span>
+                                <span className="badge badge-ghost">Contraseña</span>
                             </label>
-                            <input type="text" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="correo electrónico" className="input input-bordered" required />
-                            </div>
-                            <div className="form-control">
+                            <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} placeholder="contraseña" className="input input-bordered w-full" required />
                             <label className="label">
-                                <span className="label-text text-primary">Fecha de nacimiento</span>
+                                <span className="badge badge-ghost">Verifica tu contraseña</span>
                             </label>
-                            <input type="date" value={born} onChange={(e) => setBorn(e.target.value)} placeholder="nombre de usuario" className="input input-bordered" required />
-                            </div>
-                            <div className="form-control">
-                            <label className="label">
-                                <span className="label-text text-primary">Género</span>
-                            </label>
-                            <div className='flex items-center gap-5'>
-                                <div className='flex items-center gap-2'>
-                                <label className='label-text text-primary'>M</label>
-                                <input
-                                    type="radio"
-                                    name="gender"
-                                    value="M"
-                                    checked={gender === "M"}
-                                    onChange={(e) => setgender(e.target.value)}
-                                    className="radio radio-primary"
-                                />
-                                </div>
-                                <div className='flex items-center gap-2'>
-                                <label className='label-text text-secondary'>F</label>
-                                <input
-                                    type="radio"
-                                    name="gender"
-                                    value="F"
-                                    checked={gender === "F"}
-                                    onChange={(e) => setgender(e.target.value)}
-                                    className="radio radio-secondary"
-                                />
-                                </div>
-                            </div>
-                            </div>
-                            <div className="form-control">
-                            <label className="label">
-                                <span className="label-text text-primary">Contraseña</span>
-                            </label>
-                            <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} placeholder="contraseña" className="input input-bordered" required />
-                            <label className="label">
-                                <span className="label-text text-primary">Verifica tu contraseña</span>
-                            </label>
-                            <input type="password" value={verifyPassword} onChange={(e) => setVerifyPassword(e.target.value)} placeholder="verificación de contraseña" className="input input-bordered" required />
+                            <input type="password" value={verifyPassword} onChange={(e) => setVerifyPassword(e.target.value)} placeholder="verificación de contraseña" className="input input-bordered w-full" required />
                             <label className="label">
                             </label>
                             </div>
                             <div className="form-control flex flex-col items-center mt-6">
-                            <button type='submit' className="btn btn-soft w-full btn-primary">Registrarse</button>
+                            <button type='submit' className="btn w-full btn-primary">Registrarse</button>
                             <div className='divider'>O</div>
                             <button type='button' className='btn w-full btn-soft' onClick={handleLogin}>Iniciar sesión</button>
                             </div>
