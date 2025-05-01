@@ -90,9 +90,9 @@ export default function Login() {
                                     </div>
                                 )}
                                 <div className="form-control flex flex-col items-center mt-6">
-                                    <button type='submit' className="w-full btn btn-soft btn-primary">Iniciar sesión</button>
+                                    <button type='submit' className="w-full btn btn-primary">Iniciar sesión</button>
                                     <div className='divider'>O</div>
-                                    <button type='button' className='w-full btn btn-soft btn-secondaryremove ' onClick={handleSignUp}>Crear una cuenta</button>
+                                    <button type='button' className='w-full btn btn-soft' onClick={handleSignUp}>Crear una cuenta</button>
                                 </div>
                             </form>
                         </div>
