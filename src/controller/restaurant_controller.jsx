@@ -1,4 +1,4 @@
-export default async function get_restaurants() {
+export async function get_restaurants() {
     try {
         const response = await fetch("https://backend-mongo-lyart.vercel.app/api/restaurants", {
             method: "GET",

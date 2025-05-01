@@ -95,7 +95,7 @@ export default function Login() {
                     </div>
                 </div>
             ) : (
-                router.push("/dashboard")
+                <Dashboard handleAuth={handleAuth} />
             )}
         </>
     )

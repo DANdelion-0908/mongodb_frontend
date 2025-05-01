@@ -1,6 +1,7 @@
+import Router from 'next/router'
 import React from 'react'
 
-const Header = () => {
+const Header = ({ handleRestaurant }) => {
   return (
     <div className="navbar bg-base-100 shadow-sm absolute top-0 z-1">
             <div className="navbar-start">
