@@ -65,11 +65,17 @@ export default function Dashboard ({ handleAuth }) {
             <input id="my-drawer-2" type="checkbox" className="drawer-toggle" />
             <div className="drawer-content flex flex-col items-center justify-center">
                 {/* Page content here */}
+
+                <div className='fixed top-0 left-0 w-screen h-screen -z-10'>
+                        <img src={"https://images.pexels.com/photos/1640774/pexels-photo-1640774.jpeg"}
+                        className='w-full h-full object-cover'
+                        alt="Banner" />
+                </div>
                 { isRestaurant && selectedRestaurant ? (
                 <div className='mt-[10%] w-full'>
                     <div className='fixed top-0 left-0 w-screen h-screen -z-10'>
-                        <img src={selectedRestaurant.img} 
-                        width={"100%"}
+                        <img src={selectedRestaurant.banner_img || "https://images.unsplash.com/photo-1543353071-10c8ba85a904?fm=jpg&q=60&w=3000&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8Zm9vZCUyMGJhY2tncm91bmR8ZW58MHx8MHx8fDA%3D"}
+                        className='w-full h-full object-cover'
                         alt="Banner" />
                     </div>
 
@@ -122,36 +128,36 @@ export default function Dashboard ({ handleAuth }) {
                     </div>
                 </div>
                 ) : (
-                    <>
-                    <div className="carousel rounded-box ml-auto mr-auto">
-                        {restaurants.map((restaurant, index) => (
-                        <div className="carousel-item" key={index}>
-                            <div className="w-full">
-                            <Restaurant_card
-                                handleRestaurant={handleRestaurant}
-                                restaurant_img={restaurant.img}
-                                restaurant_name={restaurant.restaurant_name}
-                                restaurant_rating={restaurant.rating}
-                                restaurant_description={restaurant.description}
-                            />
+                    <div className='mt-auto bg-base-100 ml-auto xl:h-[85%] w-auto sm:h-screen'>
+                        <div className="carousel rounded-box ml-auto mr-auto">
+                            {restaurants.map((restaurant, index) => (
+                            <div className="carousel-item" key={index}>
+                                <div className="w-full">
+                                <Restaurant_card
+                                    handleRestaurant={handleRestaurant}
+                                    restaurant_img={restaurant.img}
+                                    restaurant_name={restaurant.restaurant_name}
+                                    restaurant_rating={restaurant.rating}
+                                    restaurant_description={restaurant.description}
+                                />
+                                </div>
                             </div>
+                            ))}
                         </div>
-                        ))}
-                    </div>
-                    <div className="carousel rounded-box ml-auto mr-auto">
-                        {dishes.map((dish, index) => (
-                        <div className="carousel-item" key={index}>
-                            <div className="w-full">
-                            <Promo_card
-                                dish_img={dish.img}
-                                dish_name={dish.name}
-                                dish_price={dish.price}
-                            />
+                        <div className="carousel rounded-box ml-auto mr-auto">
+                            {dishes.map((dish, index) => (
+                            <div className="carousel-item" key={index}>
+                                <div className="w-full">
+                                <Promo_card
+                                    dish_img={dish.img}
+                                    dish_name={dish.name}
+                                    dish_price={dish.price}
+                                />
+                                </div>
                             </div>
+                            ))}
                         </div>
-                        ))}
                     </div>
-                    </>
                 )}
             </div>
             <div className="drawer-side shadow-sm">

@@ -3,7 +3,7 @@ import React from 'react'
 
 const Header = ({ toHome }) => {
   return (
-    <div className="navbar bg-base-100 shadow-sm absolute top-0 z-1">
+    <div className="navbar bg-base-100 shadow-sm fixed top-0 z-1">
             <div className="navbar-start">
                 <label htmlFor="my-drawer-2" className="btn btn-ghost drawer-button lg:hidden" aria-label="open sidebar">
                     <svg

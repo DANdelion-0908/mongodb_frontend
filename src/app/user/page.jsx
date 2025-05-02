@@ -11,8 +11,13 @@ import Header from '@/components/header'
 const User = () => {
     const [user, setUser] = useState({});
     const [reviews, setReviews] = useState([]);
+    const [isSuccess, setIsSuccess] = useState("");
     const [orders, setOrders] = useState([]);
     const router = useRouter();
+
+    const [newUsername, setNewUsername] = useState("");
+    const [newImg, setNewImg] = useState("");
+    const [newAddress, setNewAddress] = useState("");
 
     const toHome = () => {
         router.push("/dashboard");
@@ -22,6 +27,12 @@ const User = () => {
         localStorage.removeItem('user');
         alert("Sesión cerrada");
         router.push("/login");
+    }
+
+    const handleUserChange = () => {
+        setTimeout(() => {
+            setIsSuccess("");
+        }, 5000);
     }
 
     useEffect(() => {
@@ -37,10 +48,56 @@ const User = () => {
             <input id="my-drawer-2" type="checkbox" className="drawer-toggle" />
             <div className="drawer-content flex flex-col items-center justify-center">
                 {/* Page content here */}
+
+                <div className='fixed top-0 left-0 w-screen h-screen -z-10'>
+                        <img src={"https://wallpapers.com/images/hd/food-4k-1pf6px6ryqfjtnyr.jpg"}
+                        className='w-full h-full object-cover'
+                        alt="Banner" />
+                </div>
+
+                {/* Open the modal using document.getElementById('ID').showModal() method */}
+                <dialog id="my_modal_5" className="modal modal-bottom sm:modal-middle">
+                <div className="modal-box">
+                    <h3 className="font-bold text-lg">Editar perfil</h3>
+                    <fieldset className="fieldset p-4 mt-2">
+                        <label className="label">Nombre de usuario</label>
+                        <input type="text" className="input w-full" placeholder="Tyler1" value={newUsername} onChange={(e) => setNewUsername(e.target.value)} />
+
+                        <label className="label">Imagen de perfil</label>
+                        <input type="text" className="input w-full" placeholder="URL de la imagen" value={newImg} onChange={(e) => setNewImg(e.target.value)} />
+
+                        <label className="label">Dirección</label>
+                        <input type="text" className="input w-full" placeholder="Dirección" value={newAddress} onChange={(e) => setNewAddress(e.target.value)} />
+                    </fieldset>
+                    <div className="modal-action">
+                    <form method="dialog" className="flex flex-row gap-5">
+                        {/* if there is a button in form, it will close the modal */}
+                        <button className="btn">Close</button>
+                        <button className="btn btn-primary" onClick={() => { handleUserChange(); setIsSuccess(true); }}>Guardar</button>
+                    </form>
+                    </div>
+                </div>
+                </dialog>
+                {/* END MODAL */}
+
+                { isSuccess === true ? (
+                    <div className="toast absolute">
+                        <div className="alert alert-success shadow-md">
+                            <span>Perfil actualizado</span>
+                        </div>
+                    </div>
+                ) : isSuccess === false && (
+                    <div className="toast absolute">
+                        <div className="alert alert-error shadow-md">
+                            <span>Error al actualizar el perfil</span>
+                        </div>
+                    </div>
+                )}
+
                 <div className='mt-[10%] w-full'>
                     <div className='flex flex-col bg-base-100 justify-between gap-25 h-auto p-10 sm:w-[90%] sm:rounded-2xl shadow-sm m-auto'>
                         <div className='flex flex-row gap-15 w-full items-center'>
-                            <div className="indicator indicator-bottom avatar cursor-pointer hover:scale-110 transition" onClick={() => handleUser()}>
+                            <div className="indicator indicator-bottom avatar cursor-pointer hover:scale-110 transition" onClick={()=>document.getElementById('my_modal_5').showModal()}>
                                 <div className="w-24 rounded-full">
                                 <img src={user.img || "https://www.iconpacks.net/icons/2/free-user-icon-3296-thumb.png"} />
                                 </div>

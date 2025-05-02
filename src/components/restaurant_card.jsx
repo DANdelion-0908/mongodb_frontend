@@ -3,7 +3,7 @@ import React from 'react'
 const Restaurant_card = ({ handleRestaurant, restaurant_img, restaurant_name, restaurant_rating, restaurant_description }) => {
     return (
     <>
-        <div className="card max-w-100 min-h-80 max-h-80 mt-50 m-5 bg-base-100 shadow-sm cursor-pointer hover:scale-103 transition-all" onClick={() => { handleRestaurant(restaurant_img, restaurant_name, restaurant_rating, restaurant_description); }}>
+        <div className="card max-w-80 min-h-60 max-h-70 mt-50 m-5 bg-base-100 shadow-sm cursor-pointer hover:scale-103 transition-all" onClick={() => { handleRestaurant(restaurant_img, restaurant_name, restaurant_rating, restaurant_description); }}>
             
             <figure>
                 <img

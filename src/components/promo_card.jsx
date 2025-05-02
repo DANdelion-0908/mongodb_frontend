@@ -3,7 +3,7 @@ import React from 'react'
 const Promo_card = ({ dish_img, dish_name, dish_price }) => {
   return (
     <>
-        <div className="card m-5 max-w-100 min-h-80 max-h-80 bg-base-100 shadow-sm cursor-pointer hover:scale-103 transition-all" onClick={() => {alert(`${dish_name}`)}}>
+        <div className="card m-5 max-w-80 min-h-60 max-h-80 bg-base-100 shadow-sm cursor-pointer hover:scale-103 transition-all" onClick={() => {alert(`${dish_name}`)}}>
             <span className='badge badge-warning absolute badge-md self-end text-md font-bold'>5%</span>
             <figure>
                 <img
