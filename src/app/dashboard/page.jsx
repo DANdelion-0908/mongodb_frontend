@@ -86,7 +86,7 @@ export default function Dashboard ({ handleAuth }) {
                                     <img src={selectedRestaurant.img} alt="Restaurant" />
                                 </div>
                             </div>
-                            <h1 className='text-4xl font-bold text-center'>{selectedRestaurant.name}</h1>
+                            <h1 className='text-6xl font-bold text-center'>{selectedRestaurant.name}</h1>
                             <p>{selectedRestaurant.description}</p>
                             <div className="rating rating-lg">
                                 <input type="radio" name="rating-3" className="mask mask-star-2 bg-orange-400" />
@@ -168,17 +168,17 @@ export default function Dashboard ({ handleAuth }) {
                         <div className="ring-primary ring-offset-base-100 w-24 rounded-full ring-2 ring-offset-2">
                             <img src={user.img || "https://www.iconpacks.net/icons/2/free-user-icon-3296-thumb.png"} />
                         </div>
-                        <span className='badge badge-ghost w-auto text-xl'>{user.user_name}</span>
+                        <span className='badge badge-ghost w-auto text-3xl'>{user.user_name}</span>
                     </div>
                     <ul className='flex flex-col gap-5'>
-                        <li><div className='btn btn-neutral'>Lorem Ipsum</div></li>
-                        <li><div className='btn btn-neutral'>El diablo, bro</div></li>
-                        <li><div className='btn btn-neutral'>No sé qué poner</div></li>
+                        <li><div className='btn btn-neutral text-2xl'>Lorem Ipsum</div></li>
+                        <li><div className='btn btn-neutral text-2xl'>El diablo, bro</div></li>
+                        <li><div className='btn btn-neutral text-2xl'>No sé qué</div></li>
                         { user.admin === 1 && (
-                            <li><div className='btn btn-neutral'>Agregar restaurante</div></li>
+                            <li><div className='btn btn-neutral text-2xl'>Agregar restaurante</div></li>
                         )}
                     </ul>
-                    <li><div onClick={handleLogout} className='btn btn-primary'>Cerrar sesión</div></li>
+                    <li><div onClick={handleLogout} className='h-10 btn btn-primary text-2xl'>Cerrar sesión</div></li>
                 </ul>
             </div>
         </div>

@@ -68,13 +68,13 @@ export default function Login() {
                             <form className="card-body" onSubmit={(e) => { e.preventDefault(); handleLogin(); }}>
                                 <div className="form-control">
                                     <label className="label">
-                                        <span className="label-text text-primary">Nombre de usuario</span>
+                                        <span className="badge badge-ghost">Nombre de usuario</span>
                                     </label>
                                     <input type="text" value={userName} onChange={(e) => setUserName(e.target.value)} placeholder="Nombre de usuario" className="input input-bordered" required />
                                     </div>
                                 <div className="form-control">
                                     <label className="label">
-                                        <span className="label-text text-primary">Contraseña</span>
+                                        <span className="badge badge-ghost">Contraseña</span>
                                     </label>
                                     <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} placeholder="Contraseña" className="input input-bordered" required />
                                     <label className="label">

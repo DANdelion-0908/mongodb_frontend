@@ -10,9 +10,9 @@ const Dish_card = ({ dish_img, dish_name, dish_rating, dish_price, dish_descript
                 width={"full"}
                 alt="Imagen del platillo" />
             </figure>
-            <div className="card-body ">
-                <h2 className="card-title">{dish_name}</h2>
-                <h2 className='card-title'>Q{dish_price}</h2>
+            <div className="card-body">
+                <h2 className="card-title text-4xl">{dish_name}</h2>
+                <h2 className='card-title text-3xl font-extralight text-gray-500'>Q{dish_price}</h2>
                 <div className="card-actions justify-center">
                     <span className="w-full btn btn-sm btn-accent text-3xl">+</span>
                 </div>

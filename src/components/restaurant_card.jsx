@@ -11,8 +11,9 @@ const Restaurant_card = ({ handleRestaurant, restaurant_img, restaurant_name, re
                 width={"full"}
                 alt="Imagen del restaurante" />
             </figure>
-            <div className="card-body pt-[12%]">
-                <h2 className="card-title">{restaurant_name}</h2>
+            
+            <div className="card-body pt-[5%]">
+                <h2 className="card-title text-4xl">{restaurant_name}</h2>
                 <div className="card-actions justify-center">
                     <div className="rating" id={restaurant_name}>
                         <div className="mask mask-star bg-orange-400" aria-label="1 star"></div>

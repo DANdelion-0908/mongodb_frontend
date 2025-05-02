@@ -22,7 +22,7 @@ const Header = ({ toHome }) => {
             </label>
         </div>
         <div className="navbar-center">
-            <a className="btn btn-ghost text-xl" onClick={toHome}>Sabor 2</a>
+            <a className="btn btn-ghost text-4xl" onClick={toHome}>Sabor 2</a>
         </div>
         <div className="navbar-end">
             
