@@ -1,0 +1,117 @@
+'use client'
+
+import React from 'react'
+import { useState, useEffect } from 'react'
+import { useRouter } from 'next/navigation';
+import Review_card from '@/components/review_card'
+import Order_card from '@/components/order_card'
+import { get_user_orders, get_user_reviews } from '../functions/user';
+import Header from '@/components/header'
+
+const User = () => {
+    const [user, setUser] = useState({});
+    const [reviews, setReviews] = useState([]);
+    const [orders, setOrders] = useState([]);
+    const router = useRouter();
+
+    const toHome = () => {
+        router.push("/dashboard");
+    }
+
+    const handleLogout = () => {
+        localStorage.removeItem('user');
+        alert("Sesión cerrada");
+        router.push("/login");
+    }
+
+    useEffect(() => {
+        get_user_orders(user.name).then(order_list => setOrders(order_list));
+        get_user_reviews(user.name).then(review_list => setReviews(review_list));
+        setUser(JSON.parse(localStorage.getItem('user')));
+    }, [])
+
+  return (
+    <>
+    <Header toHome={toHome}/>
+        <div className="drawer lg:drawer-open">
+            <input id="my-drawer-2" type="checkbox" className="drawer-toggle" />
+            <div className="drawer-content flex flex-col items-center justify-center">
+                {/* Page content here */}
+                <div className='mt-[10%] w-full'>
+                    <div className='flex flex-col bg-base-100 justify-between gap-25 h-auto p-10 sm:w-[90%] sm:rounded-2xl shadow-sm m-auto'>
+                        <div className='flex flex-row gap-15 w-full items-center'>
+                            <div className="indicator indicator-bottom avatar cursor-pointer hover:scale-110 transition" onClick={() => handleUser()}>
+                                <div className="w-24 rounded-full">
+                                <img src={user.img || "https://www.iconpacks.net/icons/2/free-user-icon-3296-thumb.png"} />
+                                </div>
+                                <span className='indicator-item badge badge-neutral w-auto'><svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#FFFFFF"><path d="M200-200h57l391-391-57-57-391 391v57Zm-80 80v-170l528-527q12-11 26.5-17t30.5-6q16 0 31 6t26 18l55 56q12 11 17.5 26t5.5 30q0 16-5.5 30.5T817-647L290-120H120Zm640-584-56-56 56 56Zm-141 85-28-29 57 57-29-28Z"/></svg></span>
+                            </div>
+                            <h1 className='text-4xl font-bold text-center'>{user.user_name}</h1>
+                            <p>{user.description}</p>
+                        </div>
+                        { reviews && reviews.length > 0 ? (
+                            <div className="carousel rounded-box ml-auto mr-auto">
+                                <div className="carousel-item">
+                                    {reviews.map((review, index) => (
+                                        <div key={index} className="w-full">
+                                            <Review_card
+                                                review_img={review.img}
+                                                review_name={user.name}
+                                                review_rating={review.rating}
+                                                review_price={review.price}
+                                                review_description={review.description} />
+                                        </div>
+                                    ))}
+                                </div>
+                            </div>
+                        ) : (
+                            <div className="flex flex-col justify-center items-center">
+                                <h1 className='text-2xl font-bold text-center'>No tienes reseñas</h1>
+                                <p className='text-lg'>Realiza una reseña para ver tus compras</p>
+                            </div>
+                        )}
+                        { orders && orders.length > 0 ? (
+                            <div className="carousel rounded-box ml-auto mr-auto">
+                                <div className="carousel-item">
+                                    {orders.map((order, index) => (
+                                        <div key={index} className="w-full">
+                                            <Order_card
+                                                order_state={order.state}
+                                                order_date={order.date} />
+                                        </div>
+                                    ))}
+                                </div>
+                            </div>
+                        ) : (
+                            <div className="flex flex-col justify-center items-center">
+                                <h1 className='text-2xl font-bold text-center'>No tienes pedidos</h1>
+                                <p className='text-lg'>Realiza un pedido para ver tus compras</p>
+                            </div>
+                        )}
+                    </div>
+                </div>
+            </div>
+            <div className="drawer-side shadow-sm">
+                <label htmlFor="my-drawer-2" aria-label="close sidebar" className="drawer-overlay"></label>
+                <ul className="menu bg-base-100 min-h-full w-70 pt-10 pb-10 flex flex-col items-center justify-between">
+                    {/* Sidebar content here */}
+                    <div className="flex flex-col gap-7 justify-center items-center avatar cursor-pointer" onClick={() => handleUser()}>
+                        <div className="ring-primary ring-offset-base-100 w-24 rounded-full ring-2 ring-offset-2">
+                            <img src={user.img || "https://www.iconpacks.net/icons/2/free-user-icon-3296-thumb.png"} />
+                        </div>
+                        <span className='badge badge-ghost w-auto text-xl'>{user.user_name}</span>
+                    </div>
+                    <ul className='flex flex-col gap-5'>
+                        <li><div className='btn btn-neutral'>Lorem Ipsum</div></li>
+                        <li><div className='btn btn-neutral'>El diablo, bro</div></li>
+                        <li><div className='btn btn-neutral'>No sé qué poner</div></li>
+                    </ul>
+                    <li><div onClick={handleLogout} className='btn btn-primary'>Cerrar sesión</div></li>
+                </ul>
+            </div>
+        </div>
+    </>
+  )
+}
+
+export default User

@@ -52,6 +52,10 @@ export default function Dashboard ({ handleAuth }) {
     const toHome = () => {
         setIsRestaurant(false);
     }
+
+    const handleUser = () => {
+        router.push("/user");
+    }
     
 
   return (
@@ -154,9 +158,9 @@ export default function Dashboard ({ handleAuth }) {
                 <label htmlFor="my-drawer-2" aria-label="close sidebar" className="drawer-overlay"></label>
                 <ul className="menu bg-base-100 min-h-full w-70 pt-10 pb-10 flex flex-col items-center justify-between">
                     {/* Sidebar content here */}
-                    <div className="flex flex-col gap-7 justify-center items-center avatar cursor-pointer" onClick={() => {alert("Perfil")}}>
+                    <div className="flex flex-col gap-7 justify-center items-center avatar cursor-pointer" onClick={() => handleUser()}>
                         <div className="ring-primary ring-offset-base-100 w-24 rounded-full ring-2 ring-offset-2">
-                            <img src={user.image || "https://www.iconpacks.net/icons/2/free-user-icon-3296-thumb.png"} />
+                            <img src={user.img || "https://www.iconpacks.net/icons/2/free-user-icon-3296-thumb.png"} />
                         </div>
                         <span className='badge badge-ghost w-auto text-xl'>{user.user_name}</span>
                     </div>
@@ -164,6 +168,9 @@ export default function Dashboard ({ handleAuth }) {
                         <li><div className='btn btn-neutral'>Lorem Ipsum</div></li>
                         <li><div className='btn btn-neutral'>El diablo, bro</div></li>
                         <li><div className='btn btn-neutral'>No sé qué poner</div></li>
+                        { user.admin === 1 && (
+                            <li><div className='btn btn-neutral'>Agregar restaurante</div></li>
+                        )}
                     </ul>
                     <li><div onClick={handleLogout} className='btn btn-primary'>Cerrar sesión</div></li>
                 </ul>

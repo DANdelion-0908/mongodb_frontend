@@ -1,7 +1,7 @@
 import Router from 'next/router'
 import React from 'react'
 
-const Header = ({ handleRestaurant }) => {
+const Header = ({ toHome }) => {
   return (
     <div className="navbar bg-base-100 shadow-sm absolute top-0 z-1">
             <div className="navbar-start">
@@ -22,7 +22,7 @@ const Header = ({ handleRestaurant }) => {
             </label>
         </div>
         <div className="navbar-center">
-            <a className="btn btn-ghost text-xl">Sabor 2</a>
+            <a className="btn btn-ghost text-xl" onClick={toHome}>Sabor 2</a>
         </div>
         <div className="navbar-end">
             

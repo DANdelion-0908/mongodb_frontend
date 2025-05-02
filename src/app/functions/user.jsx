@@ -1,27 +1,3 @@
-export async function fetchPostsByUser() {
-    try {
-    const response = await fetch(`https://backend-wtp.vercel.app/api/get-posts-user/${user}`);    
-    
-    if (!response.ok) {
-        throw new Error(`Error HTTP: ${response.status}`);
-    }
-
-    const posts = await response.json();
-
-    if (!posts || Object.keys(posts).length === 0) {
-        console.log("No se encontró el posts.");
-        return null;
-        
-    }
-
-    return posts;
-
-    } catch (error) {
-        console.error("Error al hacer la solicitud:", error);
-
-    }
-}
-
 export async function fetchUser(username) {
     try {
         const response = await fetch(`https://backend-mongo-lyart.vercel.app/api/user/${username}`);    
@@ -60,63 +36,40 @@ export async function registerUser(body) {
     }
 }
 
-export async function followUser() {
-    console.log(body);
+export async function get_user_orders(username) {
     try {
-        const response = await fetch(`https://backend-wtp.vercel.app/api/follow`, {
-            headers: {
-                "Content-Type": "application/json",
-              },
-            method: 'POST',
-            body: body
-        });    
-
-        return response;
+        const response = await fetch(`https://backend-mongo-lyart.vercel.app/api/user/orders/${username}`);    
+    
+        const orders = await response.json();
+    
+        if (!orders || Object.keys(orders).length === 0) {
+            console.log("Error al buscar usuario");
+            return null;
+        }
+    
+        return orders;
 
     } catch (error) {
         console.error("Error al hacer la solicitud:", error);
-    
+
     }
 }
 
-export async function checkFollowRelation(user1Name, user2Name) {
+export async function get_user_reviews(username) {
     try {
-      const response = await fetch('https://backend-wtp.vercel.app/api/checkFollowsRelation', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ user1Name, user2Name }),
-      });
-  
-      if (!response.ok) {
-        throw new Error(`Error en la solicitud: ${response.statusText}`);
-      }
-  
-      const data = await response.json();
-      return data.followsRelationExists;
-      
-    } catch (error) {
-      console.error("Error al verificar la relación:", error);
-      return false;
-    }
-  };
-
-export async function unfollowUser() {
-    console.log(body);
-    try {
-        const response = await fetch(`https://backend-wtp.vercel.app/api/unfollowUser`, {
-            headers: {
-                "Content-Type": "application/json",
-              },
-            method: 'POST',
-            body: body
-        });    
-
-        return response;
+        const response = await fetch(`https://backend-mongo-lyart.vercel.app/api/user/reviews/${username}`);    
+    
+        const reviews = await response.json();
+    
+        if (!reviews || Object.keys(reviews).length === 0) {
+            console.log("Error al buscar usuario");
+            return null;
+        }
+    
+        return reviews;
 
     } catch (error) {
         console.error("Error al hacer la solicitud:", error);
-    
+
     }
 }
