@@ -82,3 +82,21 @@ export async function get_restaurants_review(restaurant_id) {
         
     }
 }
+
+export async function report_user_review(user_id) {
+    try {
+        const response = await fetch(`https://backend-mongo-lyart.vercel.app/api/reviews/clear/${user_id}`, {
+            method: "PUT",
+            headers: {
+                "Content-Type": "application/json",
+            },
+        });
+
+        console.log("XXXXXXX", response)
+        return response;
+
+    } catch (error) {
+        console.log("Error fetching restaurants:", error);
+        
+    }
+}
