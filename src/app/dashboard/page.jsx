@@ -2,23 +2,29 @@
 
 import React from 'react'
 import Restaurant_card from '@/components/restaurant_card'
-import {get_restaurants, get_dishes } from '@/controller/restaurant_controller'
+import {get_restaurants, get_dishes, get_restaurants_review } from '@/controller/restaurant_controller'
 import { useState, useEffect } from 'react'
 import Promo_card from '@/components/promo_card'
 import Header from '@/components/header'
 import { useRouter } from 'next/navigation';
 import Dish_card from '@/components/dish_card'
 import Review_card from '@/components/review_card'
+import { post_user_orders, post_user_restaurant_reviews } from '../functions/user'
 
 export default function Dashboard ({ handleAuth }) {
     const [restaurants, setRestaurants] = useState([]);
     const [isRestaurant, setIsRestaurant] = useState(false);
-    const [selectedRestaurant, setSelectedRestaurant] = useState({});
+    const [selectedRestaurant, setSelectedRestaurant] = useState([]);
+    const [selectedRestaurantReviews, setSelectedRestaurantReviews] = useState([]);
     const [dishes, setDishes] = useState([]);
     const [selectedDishes, setSelectedDishes] = useState([]);
     const [user, setUser] = useState({});
     const router = useRouter();
     const [shoppingCart, setShoppingCart] = useState([]);
+
+    const [title, setTitle] = useState("");
+    const [rate, setRate] = useState(1);
+    const [comment, setComment] = useState("");
 
     useEffect(() => {
         const userData = localStorage.getItem("user");
@@ -42,26 +48,36 @@ export default function Dashboard ({ handleAuth }) {
         router.push("/login");
     }
 
-    const handleRestaurant = (img, name, rating, description) => {
-        setSelectedRestaurant({ img, name, rating, description });
+    const handleRestaurant = (id, img, name, rating, description) => {
+        setSelectedRestaurant({ id, img, name, rating, description });
+    
         get_dishes(name).then(dish_list => {
             setSelectedDishes(dish_list);
             setIsRestaurant(true);
         });
-    }
+    
+        get_restaurants_review(id).then(reviews_list => {
+            setSelectedRestaurantReviews(reviews_list);
+        });
+    };
+    
+
+    useEffect(() => {
+        console.log(selectedRestaurantReviews)
+    }, [selectedRestaurantReviews])
 
     const toHome = () => {
         setIsRestaurant(false);
     }
 
-    const handleDish = (img, name, price, description) => {
+    const handleDish = (id, img, name, price, description) => {
         const existingDish = shoppingCart.find(item => item.name === name);
         if (existingDish) {
           setShoppingCart(shoppingCart.map(item =>
             item.name === name ? { ...item, quantity: item.quantity + 1 } : item
           ));
         } else {
-          setShoppingCart([...shoppingCart, { img, name, price, description, quantity: 1 }]);
+          setShoppingCart([...shoppingCart, { id, img, name, price, description, quantity: 1 }]);
         }
     }
       
@@ -72,6 +88,43 @@ export default function Dashboard ({ handleAuth }) {
     const handleUser = () => {
         router.push("/user");
     }
+
+    const submitReview = async (e) => {
+        const reviewData = {
+            user_id: user.user_id,
+            type: "restaurant",
+            rate: parseInt(rate),
+            title,
+            comment,
+            reviewed_item_id: selectedRestaurant.id,
+        };
+    
+        await post_user_restaurant_reviews(reviewData); // reemplaza con tu función real
+        document.getElementById("restaurant_review").close();
+        alert("¡Gracias por tu reseña!");
+    };
+
+    const handleOrder = () => {
+        const order_info = {
+            user_id: user.user_id,
+            order: {
+                address: user.address,
+                dishes: shoppingCart.map(dish => ({
+                    dish_id: dish.id,
+                    quantity: dish.quantity || 1
+                })),
+                state: "In Process",
+                date: new Date().toISOString().split("T")[0],
+                total: shoppingCart.reduce((acc, dish) => acc + (dish.price * (dish.quantity || 1)), 0)
+            }
+        };
+
+        
+    
+        console.log(order_info);
+        setShoppingCart([]);
+        post_user_orders(order_info);
+    };  
     
 
   return (
@@ -143,11 +196,66 @@ export default function Dashboard ({ handleAuth }) {
                     <form method="dialog" className='flex flex-row gap-5 justify-center align-middle items-center'>
                     {/* if there is a button in form, it will close the modal */}
                         <button className="btn">Close</button>
-                        <button disabled={shoppingCart.length === 0} className="btn btn-primary">Comprar</button>
+                        <button disabled={shoppingCart.length === 0} className="btn btn-primary" onClick={() => handleOrder()}>Comprar</button>
                     </form>
                 </div>
             </div>
         </dialog>
+
+        {/* Open the modal using document.getElementById('ID').showModal() method */}
+        <dialog id="restaurant_review" className="modal modal-bottom sm:modal-middle">
+            <div className="modal-box flex flex-col justify-center items-center">
+                <h3 className="font-bold text-lg mb-4">Califica este restaurante</h3>
+
+                <form
+                    onSubmit={e => {
+                        e.preventDefault();
+                        submitReview()
+                    }}
+                    className="space-y-4"
+                >
+                    <div className="form-control">
+                        <label className="label font-medium">Puntuación</label>
+                        <input type="number" name="rate" placeholder="1-5" value={rate} onChange={(e) => setRate(e.target.value)} className='input input-bordered' />
+                    </div>
+
+                    <label className="label font-medium">Título</label>
+                    <div className="form-control">
+                        <input
+                            name="title"
+                            type="text"
+                            className="input input-bordered"
+                            placeholder="Título de tu reseña"
+                            value={title}
+                            onChange={(e) => setTitle(e.target.value)}
+                            required
+                        />
+                    </div>
+
+                    <label className="label font-medium">Comentario</label>
+                    <div className="form-control">
+                        <textarea
+                            name="comment"
+                            className="textarea textarea-bordered"
+                            placeholder="Escribe tu comentario..."
+                            value={comment}
+                            onChange={(e) => setComment(e.target.value)}
+                            required
+                        ></textarea>
+                    </div>
+
+                    <div className="modal-action flex justify-between">
+                        <form method="dialog">
+                            <button className="btn">Cerrar</button>
+                        </form>
+                        <button type="submit" className="btn btn-primary">
+                            Enviar reseña
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </dialog>
+
         
         <div className="drawer lg:drawer-open">
             <input id="my-drawer-2" type="checkbox" className="drawer-toggle" />
@@ -176,13 +284,7 @@ export default function Dashboard ({ handleAuth }) {
                             </div>
                             <h1 className='text-6xl font-bold text-center'>{selectedRestaurant.name}</h1>
                             <p>{selectedRestaurant.description}</p>
-                            <div className="rating rating-lg">
-                                <input type="radio" name="rating-3" className="mask mask-star-2 bg-orange-400" />
-                                <input type="radio" name="rating-3" className="mask mask-star-2 bg-orange-400" />
-                                <input type="radio" name="rating-3" className="mask mask-star-2 bg-orange-400" />
-                                <input type="radio" name="rating-3" className="mask mask-star-2 bg-orange-400" />
-                                <input type="radio" name="rating-3" className="mask mask-star-2 bg-orange-400" />
-                            </div>
+                            <button className='btn btn-neutral' onClick={()=>document.getElementById('restaurant_review').showModal()}>Calificar</button>
                         </div>
                         <div className="carousel rounded-box ml-auto mr-auto">
                             <div className="carousel-item">
@@ -190,6 +292,7 @@ export default function Dashboard ({ handleAuth }) {
                                     <div key={index} className="w-full">
                                         <Dish_card
                                             handleDish={handleDish}
+                                            dish_id={dish.dish_id}
                                             dish_img={dish.img}
                                             dish_name={dish.name}
                                             dish_rating={dish.rating}
@@ -201,18 +304,18 @@ export default function Dashboard ({ handleAuth }) {
                             </div>
                         </div>
                         <div className="carousel rounded-box ml-auto mr-auto">
-                            <div className="carousel-item">
-                                {selectedDishes.map((dish, index) => (
+                            {selectedRestaurantReviews.slice(0,5).map((review, index) => (
+                                <div className="carousel-item">
                                     <div key={index} className="w-full">
                                         <Review_card
-                                            user_name={dish.name}
-                                            review_title={dish.name}
-                                            review_description={dish.description}
-                                            review_rating={dish.rating}
+                                            user_name={review.user_info.user_name}
+                                            review_title={review.title}
+                                            review_description={review.comment}
+                                            review_rating={review.rate}
                                             />
                                     </div>
+                                </div>
                                 ))}
-                            </div>
                         </div>
                     </div>
                 </div>
@@ -224,6 +327,7 @@ export default function Dashboard ({ handleAuth }) {
                                 <div className="w-full">
                                 <Restaurant_card
                                     handleRestaurant={handleRestaurant}
+                                    restaurant_id={restaurant.restaurant_id}
                                     restaurant_img={restaurant.img}
                                     restaurant_name={restaurant.restaurant_name}
                                     restaurant_rating={restaurant.rating}
@@ -260,9 +364,6 @@ export default function Dashboard ({ handleAuth }) {
                         <span className='badge badge-ghost w-auto text-3xl'>{user.user_name}</span>
                     </div>
                     <ul className='flex flex-col gap-5'>
-                        <li><div className='btn btn-neutral text-2xl'>Lorem Ipsum</div></li>
-                        <li><div className='btn btn-neutral text-2xl'>El diablo, bro</div></li>
-                        <li><div className='btn btn-neutral text-2xl'>No sé qué</div></li>
                         { user.admin === 1 && (
                             <li><div className='btn btn-neutral text-2xl'>Agregar restaurante</div></li>
                         )}

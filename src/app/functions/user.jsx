@@ -25,7 +25,7 @@ export async function registerUser(body) {
                 "Content-Type": "application/json",
               },
             method: 'POST',
-            body: body
+            body: JSON.stringify(body)
         });    
 
         return response;
@@ -36,9 +36,9 @@ export async function registerUser(body) {
     }
 }
 
-export async function get_user_orders(username) {
+export async function get_user_orders(user_id) {
     try {
-        const response = await fetch(`https://backend-mongo-lyart.vercel.app/api/user/orders/${username}`);    
+        const response = await fetch(`https://backend-mongo-lyart.vercel.app/api/user/orders/${user_id}`);    
     
         const orders = await response.json();
     
@@ -55,18 +55,76 @@ export async function get_user_orders(username) {
     }
 }
 
-export async function get_user_reviews(username) {
+export async function post_user_orders(order) {
     try {
-        const response = await fetch(`https://backend-mongo-lyart.vercel.app/api/user/reviews/${username}`);    
+        const response = await fetch(`https://backend-mongo-lyart.vercel.app/api/user/order`, {
+            headers: {
+                "Content-Type": "application/json",
+            },
+            method: 'POST',
+            body: JSON.stringify(order)
+        });    
+
+        console.log("BBBBB", response);
+        return response;
+    
+    } catch (error) {
+        console.error("Error al hacer la solicitud:", error);
+
+    }
+}
+
+export async function get_user_reviews(user_id) {
+    try {
+        const response = await fetch(`https://backend-mongo-lyart.vercel.app/api/users/${user_id}/reviews`, {
+            headers: {
+                "Content-Type": "application/json"
+            },
+            method: "GET"
+        });    
     
         const reviews = await response.json();
     
-        if (!reviews || Object.keys(reviews).length === 0) {
-            console.log("Error al buscar usuario");
-            return null;
-        }
-    
+        console.log("PPPPPP", reviews)
         return reviews;
+
+    } catch (error) {
+        console.error("Error al hacer la solicitud:", error);
+
+    }
+}
+
+export async function put_user_info(user_id, user_name, img) {
+    try {
+        const response = await fetch(`https://backend-mongo-lyart.vercel.app/api/users/${user_id}`, {
+            headers: {
+                "Content-Type": "application/json",
+            },
+            method: 'PUT',
+            body: JSON.stringify({ user_name, img })
+        });    
+
+        console.log("AAAAAA", user_id, user_name, img, response)
+        return response;
+    
+    } catch (error) {
+        console.error("Error al hacer la solicitud:", error);
+
+    }
+}
+
+export async function post_user_restaurant_reviews(body) {
+    try {
+        const response = await fetch(`https://backend-mongo-lyart.vercel.app/api/user/review_restaurant`, {
+            headers: {
+                "Content-Type": "application/json",
+            },
+            method: 'POST',
+            body: JSON.stringify(body)
+        });
+    
+        console.log("OOOOOO", body)
+        return response;
 
     } catch (error) {
         console.error("Error al hacer la solicitud:", error);

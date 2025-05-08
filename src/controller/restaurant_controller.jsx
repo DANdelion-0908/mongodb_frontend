@@ -54,3 +54,31 @@ export async function get_dishes(restaurant) {
 export async function set_restaurant(restaurant_img, restaurant_name, restaurant_rating) {
 
 }
+
+export async function get_restaurants_review(restaurant_id) {
+    try {
+        const response = await fetch(`https://backend-mongo-lyart.vercel.app/api/restaurant/reviews/${restaurant_id}`, {
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json",
+            },
+        });
+
+        if (!response.ok) {
+            throw new Error("Error fetching reviews");
+        }
+
+        const restaurants = await response.json();
+
+        if (restaurants.length === 0) {
+            throw new Error("No restaurants found");
+        }
+
+        console.log("XXXXXXX", restaurants)
+        return restaurants;
+
+    } catch (error) {
+        console.log("Error fetching restaurants:", error);
+        
+    }
+}

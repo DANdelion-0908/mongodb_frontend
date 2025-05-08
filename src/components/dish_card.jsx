@@ -1,6 +1,6 @@
 import React from 'react'
 
-const Dish_card = ({ handleDish, dish_img, dish_name, dish_rating, dish_price, dish_description }) => {
+const Dish_card = ({ handleDish, dish_id, dish_img, dish_name, dish_rating, dish_price, dish_description }) => {
   const modalId = `modal-${dish_name.replace(/\s+/g, '-')}`; // ejemplo: "Pizza Suprema" => "modal-Pizza-Suprema"
 
   return (
@@ -14,7 +14,7 @@ const Dish_card = ({ handleDish, dish_img, dish_name, dish_rating, dish_price, d
           <div className="modal-action">
             <form method="dialog">
               <button className="btn">Cerrar</button>
-              <button className="btn btn-primary ml-5" onClick={() => handleDish(dish_img, dish_name, dish_price, dish_description)}>Agregar</button>
+              <button className="btn btn-primary ml-5" onClick={() => handleDish(dish_id, dish_img, dish_name, dish_price, dish_description)}>Agregar</button>
             </form>
           </div>
         </div>
