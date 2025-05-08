@@ -7,6 +7,7 @@ import Review_card from '@/components/review_card'
 import Order_card from '@/components/order_card'
 import { fetchUser, get_user_orders, get_user_reviews, put_user_info } from '../functions/user';
 import Header from '@/components/header'
+import User_review_card from '@/components/user_review_card';
 
 const User = () => {
     const [user, setUser] = useState({});
@@ -126,10 +127,11 @@ const User = () => {
                                     <div className="carousel-item">
                                         {reviews.map((review, index) => (
                                             <div key={index} className="w-full">
-                                                <Review_card
-                                                    review_img={review.img}
-                                                    review_name={user.name}
+                                                <User_review_card
                                                     review_title={review.title}
+                                                    review_id={review.review_id}
+                                                    review_img={review.img}
+                                                    user_name={user.user_name}
                                                     review_rating={review.rate}
                                                     review_price={review.price}
                                                     review_description={review.comment}/>
@@ -152,6 +154,11 @@ const User = () => {
                                         {orders.map((order, index) => (
                                             <div key={index} className="w-full">
                                                 <Order_card
+                                                    order_id={order.order_id}
+                                                    user_name={user.user_name}
+                                                    order_address={order.address}
+                                                    order_dishes={order.dishes}
+                                                    order_total={order.total}
                                                     order_state={order.state}
                                                     order_date={order.date} />
                                             </div>

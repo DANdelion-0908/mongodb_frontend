@@ -131,3 +131,41 @@ export async function post_user_restaurant_reviews(body) {
 
     }
 }
+
+export async function post_user_order_reviews(body) {
+    try {
+        const response = await fetch(`https://backend-mongo-lyart.vercel.app/api/reviews/order`, {
+            headers: {
+                "Content-Type": "application/json",
+            },
+            method: 'POST',
+            body: body
+        });
+    
+        console.log("ZZZZZZZZZZZZZ", body, response)
+        return response;
+
+    } catch (error) {
+        console.error("Error al hacer la solicitud:", error);
+
+    }
+}
+
+export async function put_user_review(review_id, body) {
+    try {
+        const response = await fetch(`https://backend-mongo-lyart.vercel.app/api/reviews/${review_id}`, {
+            headers: {
+                "Content-Type": "application/json",
+            },
+            method: 'PUT',
+            body: body
+        });    
+
+        console.log("ÑÑÑÑÑÑÑ", review_id, response)
+        return response;
+    
+    } catch (error) {
+        console.error("Error al hacer la solicitud:", error);
+
+    }
+}
