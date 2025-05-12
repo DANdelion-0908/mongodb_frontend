@@ -38,7 +38,6 @@ const Promo_card = ({ handleDish, dish_id, dish_img, dish_name, dish_rating, dis
           <div className="modal-action">
             <form method="dialog">
               <button className="btn">Cerrar</button>
-              <button className="btn btn-primary ml-5" onClick={() => handleDish(dish_id, dish_img, dish_name, dish_price, dish_description)}>Agregar</button>
             </form>
           </div>
         </div>
