@@ -1,7 +1,7 @@
 import { fetchUser, put_user_review } from '@/app/functions/user';
 import React, { useState } from 'react'
 
-const User_review_card = ({ user_name, review_id, review_title, review_description, review_rating }) => {
+const User_review_card = ({ review_type, user_name, review_id, review_title, review_description, review_rating }) => {
 
     const [newTitle, setNewTitle] = useState("");
     const [newComment, setNewComment] = useState("");
@@ -50,6 +50,7 @@ const User_review_card = ({ user_name, review_id, review_title, review_descripti
         </dialog>
         <div className="card m-2 w-auto bg-base-100 shadow-sm cursor-pointer hover:scale-103 transition-all" onClick={() => document.getElementById('review_edit').showModal()}>
             <div className="card-body">
+                <h2>Tipo de review: {review_type}</h2>
                 <h2 className="card-title">{review_title}</h2>
                 <h3>De: {user_name}</h3>
                 <p>{review_description}</p>
