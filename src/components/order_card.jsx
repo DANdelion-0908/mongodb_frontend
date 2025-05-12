@@ -73,7 +73,7 @@ const Order_card = ({ user_name, order_id, order_address, order_dishes, order_to
             </div>
         </dialog>
 
-        <div className="card m-5 w-auto bg-base-100 shadow-sm cursor-pointer hover:scale-103 transition-all" onClick={()=>document.getElementById('order_review').showModal()}>
+        <div className="card w-auto bg-base-100 shadow-sm cursor-pointer hover:scale-103 transition-all" onClick={()=>document.getElementById('order_review').showModal()}>
             <div className="card-body pt-[12%]">
                 <div className='flex flex-row justify-between mb-2'>
                     <h2 className="card-title">Estado: {order_state}</h2>

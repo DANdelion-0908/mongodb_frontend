@@ -130,6 +130,21 @@ export default function Dashboard ({ handleAuth }) {
   return (
     <>
         <Header toHome={toHome}/>
+
+        {/* Open the modal using document.getElementById('ID').showModal() method */}
+        <button className="btn" onClick={()=>document.getElementById('admin_modal').showModal()}>open modal</button>
+        <dialog id="admin_modal" className="modal modal-bottom sm:modal-middle">
+        <div className="modal-box">
+            <h3 className="font-bold text-lg">Hello!</h3>
+            <p className="py-4">Press ESC key or click the button below to close</p>
+            <div className="modal-action">
+            <form method="dialog">
+                {/* if there is a button in form, it will close the modal */}
+                <button className="btn">Close</button>
+            </form>
+            </div>
+        </div>
+        </dialog>
         
         {/* Open the modal using document.getElementById('ID').showModal() method */}
         <dialog id="shopping_cart" className="modal modal-bottom w-full">
@@ -195,7 +210,7 @@ export default function Dashboard ({ handleAuth }) {
                     <button className='btn btn-ghost mr-5'>{user.address}</button>
                     <form method="dialog" className='flex flex-row gap-5 justify-center align-middle items-center'>
                     {/* if there is a button in form, it will close the modal */}
-                        <button className="btn">Close</button>
+                        <button className="btn">Cerrar</button>
                         <button disabled={shoppingCart.length === 0} className="btn btn-primary" onClick={() => handleOrder()}>Comprar</button>
                     </form>
                 </div>
@@ -256,8 +271,7 @@ export default function Dashboard ({ handleAuth }) {
             </div>
         </dialog>
 
-        
-        <div className="drawer lg:drawer-open">
+        <div className="drawer lg:drawer-open ab fixed">
             <input id="my-drawer-2" type="checkbox" className="drawer-toggle" />
             <div className="drawer-content flex flex-col items-center justify-center">
                 {/* Page content here */}
@@ -268,7 +282,7 @@ export default function Dashboard ({ handleAuth }) {
                         alt="Banner" />
                 </div>
                 { isRestaurant && selectedRestaurant ? (
-                    <div className='mt-[10%] w-full'>
+                    <div className='w-full'>
                     <div className='fixed top-0 left-0 w-screen h-screen -z-10'>
                         <img src={selectedRestaurant.banner_img || "https://images.unsplash.com/photo-1543353071-10c8ba85a904?fm=jpg&q=60&w=3000&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8Zm9vZCUyMGJhY2tncm91bmR8ZW58MHx8MHx8fDA%3D"}
                         className='w-full h-full object-cover'
@@ -355,7 +369,7 @@ export default function Dashboard ({ handleAuth }) {
             </div>
             <div className="drawer-side shadow-sm">
                 <label htmlFor="my-drawer-2" aria-label="close sidebar" className="drawer-overlay"></label>
-                <ul className="menu bg-base-100 min-h-full w-70 pt-10 pb-10 flex flex-col items-center justify-between">
+                <ul className="menu bg-base-100 min-h-full w-70 pt-10 pb-10 flex flex-col items-center justify-around">
                     {/* Sidebar content here */}
                     <div className="flex flex-col gap-7 justify-center items-center avatar cursor-pointer" onClick={() => handleUser()}>
                         <div className="ring-primary ring-offset-base-100 w-24 rounded-full ring-2 ring-offset-2">

@@ -43,17 +43,22 @@ const User = () => {
         window.location.reload();
     }    
 
-    useEffect(() => {
-        setUser(JSON.parse(localStorage.getItem('user')));
+    const handleOrders_Reviews = () => {
         get_user_orders(user.user_id).then(order_list => setOrders(order_list));
         get_user_reviews(user.user_id).then(review_list => setReviews(review_list));
-    }, [])
-    
+    }
+
     useEffect(() => {
-        get_user_orders(user.user_id).then(order_list => setOrders(order_list));
-        get_user_reviews(user.user_id).then(review_list => setReviews(review_list));
-    }, [user])
-    
+        const localUser = JSON.parse(localStorage.getItem('user'));
+        setUser(localUser);
+    }, []);
+
+    useEffect(() => {
+        if (user?.user_id) {
+            handleOrders_Reviews();
+        }
+    }, [user]);
+
 
   return (
     <>
@@ -86,7 +91,7 @@ const User = () => {
                     <div className="modal-action">
                     <form method="dialog" className="flex flex-row gap-5">
                         {/* if there is a button in form, it will close the modal */}
-                        <button className="btn">Close</button>
+                        <button className="btn">Cerrar</button>
                         <button className="btn btn-primary" onClick={() => { handleUserChange(); setIsSuccess(true); }}>Guardar</button>
                     </form>
                     </div>
@@ -177,17 +182,20 @@ const User = () => {
             </div>
             <div className="drawer-side shadow-sm">
                 <label htmlFor="my-drawer-2" aria-label="close sidebar" className="drawer-overlay"></label>
-                <ul className="menu bg-base-100 min-h-full w-70 pt-10 pb-10 flex flex-col items-center justify-between">
+                <ul className="menu bg-base-100 min-h-full w-70 pt-10 pb-10 flex flex-col items-center justify-around">
                     {/* Sidebar content here */}
-                    <div className="flex flex-col gap-7 justify-center items-center avatar cursor-pointer" onClick={() => document.getElementById('my_modal_5').showModal()}>
+                    <div className="flex flex-col gap-7 justify-center items-center avatar cursor-pointer" onClick={() => handleUser()}>
                         <div className="ring-primary ring-offset-base-100 w-24 rounded-full ring-2 ring-offset-2">
                             <img src={user.img || "https://www.iconpacks.net/icons/2/free-user-icon-3296-thumb.png"} />
                         </div>
-                        <span className='badge badge-ghost w-auto text-xl'>{user.user_name}</span>
+                        <span className='badge badge-ghost w-auto text-3xl'>{user.user_name}</span>
                     </div>
                     <ul className='flex flex-col gap-5'>
+                        { user.admin === 1 && (
+                            <li><div className='btn btn-neutral text-2xl'>Agregar restaurante</div></li>
+                        )}
                     </ul>
-                    <li><div onClick={handleLogout} className='btn btn-primary'>Cerrar sesión</div></li>
+                    <li><div onClick={handleLogout} className='h-10 btn btn-primary text-2xl'>Cerrar sesión</div></li>
                 </ul>
             </div>
         </div>
