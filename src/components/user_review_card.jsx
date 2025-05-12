@@ -48,7 +48,7 @@ const User_review_card = ({ review_type, user_name, review_id, review_title, rev
                 </div>
             </div>
         </dialog>
-        <div className="card m-2 w-auto bg-base-100 shadow-sm cursor-pointer hover:scale-103 transition-all" onClick={() => document.getElementById('review_edit').showModal()}>
+        <div className="card bg-base-100 shadow-sm cursor-pointer hover:scale-103 transition-all" onClick={() => document.getElementById('review_edit').showModal()}>
             <div className="card-body">
                 <h2>Tipo de review: {review_type}</h2>
                 <h2 className="card-title">{review_title}</h2>

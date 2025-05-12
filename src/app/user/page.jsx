@@ -125,10 +125,10 @@ const User = () => {
                             </div>
                             <div className='flex flex-col items-center'>
                                 <h1 className='text-2xl font-bold self-start'>Reseñas</h1>
-                                { reviews ? (
+                                { reviews && reviews.length > 0 ? (
                                     <div className="carousel rounded-box ml-auto mr-auto">
+                                    <div  className="carousel-item w-full h-full flex flex-row gap-5 flex-wrap">
                                         {reviews.map((review, index) => (
-                                            <div key={index} className="carousel-item w-full">
                                                 <User_review_card
                                                     review_type={review.type}
                                                     review_title={review.title}
@@ -138,9 +138,10 @@ const User = () => {
                                                     review_rating={review.rate}
                                                     review_price={review.price}
                                                     review_description={review.comment}
+                                                    key={index}
                                                 />
-                                            </div>
-                                        ))}
+                                            ))}
+                                    </div>
                                     </div>
                                 ) : (
                                     <div className="flex flex-col justify-center items-center">
@@ -152,10 +153,9 @@ const User = () => {
                             <div className='flex flex-col items-center'>
                                 <h1 className='text-2xl font-bold self-start'>Órdenes</h1>
                                 { orders && orders.length > 0 ? (
-                                    <div className="carousel rounded-box ml-auto mr-auto">
-                                        <div className="carousel-item">
+                                    <div  className="carousel-item w-full h-full flex flex-row gap-5 flex-wrap">
                                             {orders.map((order, index) => (
-                                                <div key={index} className="w-full">
+                                                <div className="carousel rounded-box ml-auto mr-auto" key={index}>
                                                     <Order_card
                                                         order_id={order.order_id}
                                                         user_name={user.user_name}
@@ -166,7 +166,6 @@ const User = () => {
                                                         order_date={order.date} />
                                                 </div>
                                             ))}
-                                        </div>
                                     </div>
                                 ) : (
                                     <div className="flex flex-col justify-center items-center">

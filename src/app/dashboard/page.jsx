@@ -38,7 +38,7 @@ export default function Dashboard ({ handleAuth }) {
 
     useEffect(() => {
         get_restaurants().then(restaurant_list => setRestaurants(restaurant_list));
-        get_dishes("Pizza Hut").then(dish_list => setDishes(dish_list));
+        get_dishes("Domino's Pizza").then(dish_list => setDishes(dish_list));
         setUser(JSON.parse(localStorage.getItem('user')))
     }, [])
 

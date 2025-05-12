@@ -18,11 +18,11 @@ const Restaurant_card = ({ handleRestaurant, restaurant_id, restaurant_img, rest
                     <div className="rating" id={restaurant_name}>
                         <div className="mask mask-star bg-orange-400" aria-label="1 star"></div>
                         <div className="mask mask-star bg-orange-400" aria-label="2 star"></div>
-                        <div className="mask mask-star bg-orange-400" aria-label="3 star" aria-current="true"></div>
+                        <div className="mask mask-star bg-orange-400" aria-label="3 star"></div>
                         <div className="mask mask-star bg-orange-400" aria-label="4 star"></div>
-                        <div className="mask mask-star bg-orange-400" aria-label="5 star"></div>
+                        <div className="mask mask-star bg-orange-400" aria-label="5 star" aria-current="true"></div>
                     </div>
-                    <span className="badge badge-md badge-neutral">{Math.round(restaurant_rating)}</span>
+                    <span className="badge badge-md badge-neutral">{restaurant_rating.toFixed(2)}</span>
                 </div>
             </div>
         </div>

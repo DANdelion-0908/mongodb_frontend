@@ -18,9 +18,8 @@ const Order_card = ({ user_name, order_id, order_address, order_dishes, order_to
         })
 
         post_user_order_reviews(data);
-  }
+    }
   
-
     return (
     <>
         {/* Open the modal using document.getElementById('ID').showModal() method */}
@@ -80,7 +79,7 @@ const Order_card = ({ user_name, order_id, order_address, order_dishes, order_to
                     <span className="badge badge-md badge-neutral">{order_date}</span>
                 </div>
                 <h2 className='self-start'>Dirección: {order_address}</h2>
-                <div className="card-actions justify-center">
+                <div className="card-actions justify-center p-5">
                     <ul className="list bg-base-100 w-full rounded-box shadow-md">
   
                         <li className="p-4 pb-2 text-xs opacity-60 tracking-wide">Platillos ordenados</li>
