@@ -45,7 +45,6 @@ const Promo_card = ({ handleDish, dish_id, dish_img, dish_name, dish_rating, dis
 
       <div
         className="card max-w-100 min-h-80 max-h-80 m-5 bg-base-100 shadow-sm"
-        onClick={() => document.getElementById(modalId).showModal()}
       >
         <figure>
           <img src={dish_img} width={"full"} alt="Imagen del platillo" />
